@@ -6,6 +6,14 @@ set $actions python3 ~/.config/sway/scripts/actions.py
 
 output * bg /home/akk/Pictures/Wallpapers/wallhaven-gpjk37.jpg fill
 output DP-1 scale 1
+# MSI portrait display sits to the left of the primary LG display.
+output DP-2 transform 90 position -1080 0 scale 1
+# Let games confine the pointer to their window when they request a lock.
+seat * pointer_constraint enable
+# Keep workspaces 6–8 on the portrait display.
+workspace number 6 output DP-2
+workspace number 7 output DP-2
+workspace number 8 output DP-2
 # Select only an advertised 180 Hz mode; otherwise retain the working mode.
 exec_always $actions display
 floating_modifier $mod normal
@@ -109,15 +117,15 @@ bindsym $mod+5 workspace number 5
 # Send window to workspace 5
 bindsym $mod+Shift+5 move container to workspace number 5
 # Workspace 6
-bindsym $mod+6 workspace number 6
+bindsym $mod+6 workspace number 6; layout stacking
 # Send window to workspace 6
 bindsym $mod+Shift+6 move container to workspace number 6
 # Workspace 7
-bindsym $mod+7 workspace number 7
+bindsym $mod+7 workspace number 7; layout stacking
 # Send window to workspace 7
 bindsym $mod+Shift+7 move container to workspace number 7
 # Workspace 8
-bindsym $mod+8 workspace number 8
+bindsym $mod+8 workspace number 8; layout stacking
 # Send window to workspace 8
 bindsym $mod+Shift+8 move container to workspace number 8
 # Workspace 9

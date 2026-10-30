@@ -1,13 +1,18 @@
 # Sway shortcuts adapted from 4jkk/linux-dotfiles/hyprland.
 set $mod Mod4
-set $term ghostty
+set $term kitty
+set $files thunar
 set $menu fuzzel
 set $actions python3 ~/.config/sway/scripts/actions.py
+set $brightness ~/.config/sway/scripts/brightness.sh
 
-output * bg /home/akk/Pictures/Wallpapers/wallhaven-gpjk37.jpg fill
-output DP-1 scale 1
-# MSI portrait display sits to the left of the primary LG display.
-output DP-2 transform 90 position -1080 0 scale 1
+# LG 2K is the primary display (Sway places the output at 0,0) at 200 Hz.
+output DP-1 mode 2560x1440@200Hz position 0 0 scale 1
+# MSI is landscape at 180 Hz, directly to the left of the LG.
+output DP-2 mode 1920x1080@180Hz transform 90 position -1920 0 scale 1
+# Keep keyboard focus changes from moving the pointer between outputs.
+mouse_warping none
+focus_follows_mouse no
 # Let games confine the pointer to their window when they request a lock.
 seat * pointer_constraint enable
 # Keep workspaces 6–8 on the portrait display.
@@ -19,8 +24,8 @@ exec_always $actions display
 floating_modifier $mod normal
 
 # Thin window borders without individual title bars.
-default_border pixel 2
-default_floating_border pixel 2
+default_border pixel 1
+default_floating_border pixel 1
 
 # Catppuccin Mocha: border, title background, text, indicator, child border.
 client.focused          #cba6f7 #313244 #cdd6f4 #cba6f7 #cba6f7
@@ -30,16 +35,20 @@ client.unfocused        #313244 #181825 #a6adc8 #313244 #313244
 client.urgent           #f38ba8 #f38ba8 #11111b #f38ba8 #f38ba8
 client.placeholder      #313244 #1e1e2e #cdd6f4 #313244 #313244
 
-# Open Ghostty
+# Open Foot
 bindsym $mod+Return exec $term
 # Open Noctalia launcher
 bindsym $mod+space exec $menu
+# Toggle Vicinae launcher
+bindsym Mod1+space exec /home/akk/.local/bin/vicinae toggle
+# Open local profile in Vicinae
+bindsym Mod1+Shift+space exec /home/akk/.local/bin/vicinae cmd launch @akk/local-profile:profile
 # Open Chrome
 bindsym $mod+Shift+b exec $actions launch browser
 # Open Chrome incognito
 bindsym $mod+Shift+Alt+b exec $actions launch browser --incognito
 # Open Dolphin
-bindsym $mod+Shift+f exec $actions launch files
+bindsym $mod+Shift+f exec $files
 # Open Neovim in Ghostty
 bindsym $mod+Shift+n exec $actions launch editor
 # Open GitHub profile
@@ -155,14 +164,12 @@ bindsym $mod+c exec $actions clipboard c
 bindsym $mod+v exec $actions clipboard v
 # Cut
 bindsym $mod+x exec $actions clipboard x
-# Copy selected screenshot
-bindsym --release $mod+s exec $actions screenshot copy
-# Edit selected screenshot
-bindsym --release $mod+Shift+s exec $actions screenshot edit
-# Save selected screenshot
+# Save selected screenshot (slurp + grim)
 bindsym --release Print exec $actions screenshot save
-# Copy selected screenshot
+bindsym --release $mod+Shift+s exec $actions screenshot save
+# Copy selected screenshot to clipboard
 bindsym --release Shift+Print exec $actions screenshot copy
+bindsym --release $mod+s exec $actions screenshot copy
 # Save full screenshot
 bindsym --release Ctrl+Print exec $actions screenshot full
 # Start/stop screen recording
@@ -172,17 +179,17 @@ bindsym --locked XF86AudioRaiseVolume exec wpctl set-volume -l 1.0 @DEFAULT_AUDI
 # Lower volume 5%
 bindsym --locked XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
 # Raise brightness 5%
-bindsym --locked XF86MonBrightnessUp exec brightnessctl set 5%+
+bindsym --locked XF86MonBrightnessUp exec $brightness up 5
 # Lower brightness 5%
-bindsym --locked XF86MonBrightnessDown exec brightnessctl set 5%-
+bindsym --locked XF86MonBrightnessDown exec $brightness down 5
 # Raise volume 1%
 bindsym --locked Mod1+XF86AudioRaiseVolume exec wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 1%+
 # Lower volume 1%
 bindsym --locked Mod1+XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 1%-
 # Raise brightness 1%
-bindsym --locked Mod1+XF86MonBrightnessUp exec brightnessctl set 1%+
+bindsym --locked Mod1+XF86MonBrightnessUp exec $brightness up 1
 # Lower brightness 1%
-bindsym --locked Mod1+XF86MonBrightnessDown exec brightnessctl set 1%-
+bindsym --locked Mod1+XF86MonBrightnessDown exec $brightness down 1
 # Mute audio
 bindsym --locked XF86AudioMute exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
 # Mute microphone
@@ -218,4 +225,10 @@ include /etc/sway/config.d/*
 
 include ~/.config/sway/noctalia
 include ~/.config/sway/noctalia-theme.conf
+
+# Keep custom border colours after the Noctalia theme overrides.
+# class                 border  background text    indicator child_border
+client.focused          #ffffff #313244 #cdd6f4 #ffffff #ffffff
+client.focused_inactive #808080 #181825 #bac2de #808080 #808080
+client.unfocused        #808080 #181825 #a6adc8 #808080 #808080
 

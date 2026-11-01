@@ -1,85 +1,137 @@
-############################################
-# STARSHIP – SINGLE MAROON BLOCK PROMPT
-# akk@medusa akk/Repos/test  branch status
-############################################
+# Location: ~/.config/starship.toml
+# What is Starship: https://starship.rs/
 
-# ------------------------------------------------
-# PROMPT LAYOUT (ONE CONTINUOUS BLOCK)
-# ------------------------------------------------
-format = """
-[](#6e2c3a)\
-$username\
-$hostname\
-$directory\
-$git_branch\
-$git_status\
-[](fg:#6e2c3a)
+add_newline = true
+command_timeout = 2000
+palette = "catppuccin_mocha"
+
+format = """$env_var$username$hostname$kubernetes$directory$git_branch$git_status$python
+$character
 """
 
-# ------------------------------------------------
-# USERNAME
-# ------------------------------------------------
-[username]
-show_always = true
-style_user = "bg:#6e2c3a fg:#ffffff bold"
-style_root = "bg:#6e2c3a fg:#ffffff bold"
-format = '[ $user]($style)'
+[character]
+success_symbol = "[╰⎯](bold green)"
+error_symbol = "[╰⎯](bold red)"
+# ╭╴ ╰─
 
-# ------------------------------------------------
-# HOSTNAME
-# ------------------------------------------------
+[env_var]
+symbol = "╭╴"
+variable = "SHELL"
+format = "[$symbol](bold mauve)"
+disabled = false
+
+# Warp default prompt characters
+# success_symbol = ""
+# error_symbol = ""
+
+[os]
+format = "[$symbol](bold white) "
+disabled = true
+
+[os.symbols]
+Windows = " "
+Arch = "󰣇"
+Ubuntu = ""
+Macos = "󰀵"
+Unknown = "󰠥"
+
+[username]
+style_user = "bold lavender"
+style_root = "bold red"
+format = "[$user]($style)"
+disabled = false
+show_always = true
+
 [hostname]
 ssh_only = false
-style = "bg:#6e2c3a fg:#ffffff bold"
-format = '[@$hostname]($style)'
+format = "[@$hostname](bold blue) "
+disabled = false
 
-# ------------------------------------------------
-# DIRECTORY (FULL PATH LIKE akk/Repos/test)
-# ------------------------------------------------
 [directory]
-style = "bg:#6e2c3a fg:#ffffff"
-
-# Show path relative to HOME instead of absolute
-# /home/akk/Repos/test → akk/Repos/test
-format = '[ $path ]($style)'
-
-# FULL path, no truncation
 truncation_length = 0
+truncation_symbol = "…/"
+home_symbol = "~"
+# read_only_style = "197"
+read_only = "  "
+format = "[$path]($style)[$read_only]($read_only_style) "
+style = "bold sapphire"
 
-# Replace /home/akk with akk
-home_symbol = "akk"
-
-# ------------------------------------------------
-# GIT BRANCH
-# ------------------------------------------------
 [git_branch]
-disabled = false
-style = "bg:#6e2c3a fg:#ffffff bold"
-format = '[  $branch ]($style)'
+# symbol = " "
+symbol = " "
+format = "[$symbol](bold green) [$branch](bold green) "
+# truncation_length = 0
+# truncation_symbol = "…/"
+style = "bold green"
 
-# ------------------------------------------------
-# GIT STATUS
-# ------------------------------------------------
 [git_status]
+disabled = true
+format = "[ $all_status $ahead_behind]($style) "
+style = "bold green"
+conflicted = "🏳"
+up_to_date = ""
+untracked = " "
+ahead = "⇡${count}"
+diverged = "⇕⇡${ahead_count}⇣${behind_count}"
+behind = "⇣${count}"
+stashed = " "
+modified = " "
+staged = "[++\\($count\\)](green)"
+renamed = "襁 "
+deleted = " "
+
+[kubernetes]
+format = "via [󱃾 $context\\($namespace\\)](bold mauve) "
 disabled = false
-style = "bg:#6e2c3a fg:#ffffff"
-format = '([$all_status$ahead_behind]($style))'
 
-# ------------------------------------------------
-# REMOVE PROMPT SYMBOL (NO ARROWS)
-# ------------------------------------------------
-[character]
+[vagrant]
 disabled = true
 
-# ------------------------------------------------
-# DISABLE UNUSED GIT MODULES
-# ------------------------------------------------
-[git_commit]
+[docker_context]
 disabled = true
 
-[git_state]
+[helm]
 disabled = true
 
-[git_metrics]
+[python]
+symbol = "󰌠"
+python_binary = ["./venv/bin/python", "python", "python3", "python2"]
+format = "[${symbol} ${pyenv_prefix}(${version} )(\\($virtualenv\\) )]($style) "
+style = "bold peach"
+
+[nodejs]
 disabled = true
 
+[ruby]
+disabled = true
+
+[terraform]
+disabled = true
+
+[palettes.catppuccin_mocha]
+rosewater = "#f5e0dc"
+flamingo = "#f2cdcd"
+pink = "#f5c2e7"
+mauve = "#cba6f7"
+red = "#f38ba8"
+maroon = "#eba0ac"
+peach = "#fab387"
+yellow = "#f9e2af"
+green = "#a6e3a1"
+teal = "#94e2d5"
+sky = "#89dceb"
+sapphire = "#74c7ec"
+blue = "#89b4fa"
+lavender = "#b4befe"
+text = "#cdd6f4"
+subtext1 = "#bac2de"
+subtext0 = "#a6adc8"
+overlay2 = "#9399b2"
+overlay1 = "#7f849c"
+overlay0 = "#6c7086"
+surface2 = "#585b70"
+surface1 = "#45475a"
+surface0 = "#313244"
+base = "#1e1e2e"
+mantle = "#181825"
+crust = "#11111b"

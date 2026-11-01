@@ -1,10 +1,10 @@
 typeset -U path
 path=("$HOME/.opencode/bin" "$HOME/.local/bin" "$HOME/bin" $path)
 export PATH
-
+export PATH="$HOME/.local/bin:$PATH"
 export EDITOR=nvim
 export VISUAL=nvim
-export BROWSER=firefox
+export BROWSER=google-chrome
 
 export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME=robbyrussell
@@ -51,10 +51,9 @@ alias ldr='lazydocker'
 alias rv='rocm-smi'
 alias nv='nvidia-smi'
 alias zshconfig='nvim ~/.zshrc'
-alias swayconfig='nvim ~/.config/sway/config'
 alias hfd='uvx huggingface-cli download'
 alias code='flatpak run com.visualstudio.code'
-
+alias amu='~/.local/bin/amtui'
 
 
 if [[ -f "$ZSH/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh" ]]; then

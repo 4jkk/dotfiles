@@ -16,8 +16,8 @@ $line_break\
 $character"""
 
 [character]
-success_symbol = "[╰⎯](green)"
-error_symbol = "[ Ψ\\(`_´ # \\)↝ ](red)"
+success_symbol = "╰⎯"
+error_symbol = "╰⎯"
 vimcmd_symbol = "[󰄛 ❮](subtext1)"
 
 [directory]

@@ -1,112 +1,58 @@
 # Location: ~/.config/starship.toml
-# What is Starship: https://starship.rs/
+# https://starship.rs/
 
 add_newline = true
 command_timeout = 2000
 palette = "catppuccin_mocha"
 
-format = """$env_var$username$hostname$kubernetes$directory$git_branch$git_status$python
-$character
-"""
+format = """
+$directory\
+$git_branch\
+$nix_shell\
+$python\
+$line_break\
+$character"""
 
 [character]
-success_symbol = "[╰⎯](bold green)"
-error_symbol = "[╰⎯](bold red)"
-# ╭╴ ╰─
-
-[env_var]
-symbol = "╭╴"
-variable = "SHELL"
-format = "[$symbol](bold mauve)"
-disabled = false
-
-# Warp default prompt characters
-# success_symbol = ""
-# error_symbol = ""
-
-[os]
-format = "[$symbol](bold white) "
-disabled = true
-
-[os.symbols]
-Windows = " "
-Arch = "󰣇"
-Ubuntu = ""
-Macos = "󰀵"
-Unknown = "󰠥"
-
-[username]
-style_user = "bold lavender"
-style_root = "bold red"
-format = "[$user]($style)"
-disabled = false
-show_always = true
-
-[hostname]
-ssh_only = false
-format = "[@$hostname](bold blue) "
-disabled = false
+success_symbol = "[>](green)"
+error_symbol = "[ Ψ\\(`_´ # \\)↝ ](red)"
+vimcmd_symbol = "[󰄛 ❮](subtext1)"
 
 [directory]
-truncation_length = 0
-truncation_symbol = "…/"
-home_symbol = "~"
-# read_only_style = "197"
-read_only = "  "
-format = "[$path]($style)[$read_only]($read_only_style) "
-style = "bold sapphire"
+format = '[$path]($style)'
+style = "bold green"
 
 [git_branch]
-# symbol = " "
-symbol = " "
-format = "[$symbol](bold green) [$branch](bold green) "
-# truncation_length = 0
-# truncation_symbol = "…/"
-style = "bold green"
+format = "  [ $branch]($style)"
+style = "yellow"
 
 [git_status]
-disabled = true
-format = "[ $all_status $ahead_behind]($style) "
-style = "bold green"
-conflicted = "🏳"
-up_to_date = ""
-untracked = " "
-ahead = "⇡${count}"
-diverged = "⇕⇡${ahead_count}⇣${behind_count}"
-behind = "⇣${count}"
-stashed = " "
-modified = " "
-staged = "[++\\($count\\)](green)"
-renamed = "襁 "
-deleted = " "
+format = "[[( [::](dimmed) $conflicted$untracked$modified$staged$renamed$deleted)](blue) ($ahead_behind$stashed)]($style)"
+style = "cyan"
+conflicted = " "
+untracked = "󰰨 "
+modified = "󰯲 "
+staged = "󰰢 "
+renamed = "󰰟 "
+deleted = "󰯵 "
+stashed = "≡"
 
-[kubernetes]
-format = "via [󱃾 $context\\($namespace\\)](bold mauve) "
-disabled = false
+[git_state]
+format = '\([$state( $progress_current/$progress_total)]($style)\) '
+style = "bright-black"
 
-[vagrant]
-disabled = true
-
-[docker_context]
-disabled = true
-
-[helm]
-disabled = true
+[cmd_duration]
+format = "[(   󱎫  took $duration\n)]($style)"
+style = "dimmed"
 
 [python]
-symbol = "󰌠"
-python_binary = ["./venv/bin/python", "python", "python3", "python2"]
-format = "[${symbol} ${pyenv_prefix}(${version} )(\\($virtualenv\\) )]($style) "
-style = "bold peach"
+format = '[$virtualenv]($style) '
+style = "bright-black"
 
-[nodejs]
-disabled = true
-
-[ruby]
-disabled = true
-
-[terraform]
-disabled = true
+[nix_shell]
+format = ' [$symbol$state( \($name\))]($style) '
+symbol = " "
+style = "dimmed purple"
 
 [palettes.catppuccin_mocha]
 rosewater = "#f5e0dc"
@@ -119,9 +65,11 @@ peach = "#fab387"
 yellow = "#f9e2af"
 green = "#a6e3a1"
 teal = "#94e2d5"
+cyan = "#94e2d5"
 sky = "#89dceb"
 sapphire = "#74c7ec"
 blue = "#89b4fa"
+purple = "#cba6f7"
 lavender = "#b4befe"
 text = "#cdd6f4"
 subtext1 = "#bac2de"

@@ -9,7 +9,7 @@ Personal Linux configuration files and setup helpers.
 - **Zsh** shell configuration and Starship prompt settings
 - **VS Code** extension list and setup script for supported VS Code editors
 
-The `sway/` directory is reserved for Sway configuration. Machine-specific files in `local/` are ignored by Git.
+Machine-specific files in `local/` are ignored by Git.
 
 ## VS Code setup
 
